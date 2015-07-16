@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering
+namespace XUI.Rendering.OpenGL
 {
-    public interface IGraphicsResource : IDisposable
+    class GLUniformBuffer
     {
-        int Handle { get; }
     }
 }

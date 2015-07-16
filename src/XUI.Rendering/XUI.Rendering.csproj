@@ -42,14 +42,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanvasRenderer.cs" />
     <Compile Include="IGraphicsResource.cs" />
+    <Compile Include="OpenGL\BufferFactory.cs" />
+    <Compile Include="OpenGL\GLAttribute.cs" />
+    <Compile Include="OpenGL\GLBuffer.cs" />
+    <Compile Include="OpenGL\GLProgram.cs" />
+    <Compile Include="OpenGL\GLUniform.cs" />
+    <Compile Include="OpenGL\GLUniformBlock.cs" />
+    <Compile Include="OpenGL\GLUniformBuffer.cs" />
+    <Compile Include="OpenGL\GLUniformBufferElement.cs" />
+    <Compile Include="OpenGL\GLVertexArrayObject.cs" />
+    <Compile Include="OpenGL\GLVertexSignature.cs" />
+    <Compile Include="OpenGL\ProgramFactory.cs" />
+    <Compile Include="OpenGL\ShaderProgramSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="OpenGL\" />
+    <ProjectReference Include="..\XUI\XUI.csproj">
+      <Project>{e9eb3bb7-64d6-4123-8a99-b31ac32ff320}</Project>
+      <Name>XUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

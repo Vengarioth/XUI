@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +11,22 @@ namespace XUI
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public UIElement Child { get; set; }
+
         public Canvas(int width, int height)
         {
             Width = width;
             Height = height;
         }
 
-        public void Initialize()
+        public void Update()
         {
             
         }
 
         public void PerformDrawingOperations()
         {
-            GraphicsContext.Assert();
+
         }
 
     }

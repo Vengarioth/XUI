@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering
+namespace XUI
 {
-    public interface IGraphicsResource : IDisposable
+    public abstract class LayoutElement : VisualElement
     {
-        int Handle { get; }
     }
 }

@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,21 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Button.cs" />
     <Compile Include="Canvas.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="ColorBrush.cs" />
+    <Compile Include="ContentElement.cs" />
+    <Compile Include="Framework\DependencyProperty.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="LayoutElement.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Brush.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Thickness.cs" />
     <Compile Include="UIElement.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\XUI.Rendering\XUI.Rendering.csproj">
-      <Project>{5233bb21-9f85-4294-8f24-5541e01c664e}</Project>
-      <Name>XUI.Rendering</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="VisualElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

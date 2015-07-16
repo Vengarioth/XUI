@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering
+namespace XUI
 {
-    public interface IGraphicsResource : IDisposable
+    public class ColorBrush : Brush
     {
-        int Handle { get; }
+        public Color Color { get; set; }
     }
 }

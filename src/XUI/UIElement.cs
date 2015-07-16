@@ -3,11 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XUI.Framework;
 
 namespace XUI
 {
-    public class UIElement
+    public abstract class UIElement
     {
+        private List<DependencyProperty> dependencyProperties = new List<DependencyProperty>();
 
+        protected object GetValue(DependencyProperty dependencyProperty)
+        {
+            return dependencyProperty.GetValue(this);
+        }
+
+        protected void SetValue(DependencyProperty dependencyProperty, object value)
+        {
+            dependencyProperty.SetValue(this, value);
+        }
+
+        internal void AddDependencyProperty(DependencyProperty dependencyProperty)
+        {
+            if (dependencyProperties.Contains(dependencyProperty))
+                dependencyProperties.Add(dependencyProperty);
+        }
+
+        internal void RemoveFromVisualTree()
+        {
+            foreach (var dependencyProperty in dependencyProperties)
+                dependencyProperty.ClearProperty(this);
+
+            dependencyProperties.Clear();
+        }
     }
 }

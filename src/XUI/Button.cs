@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering
+namespace XUI
 {
-    public interface IGraphicsResource : IDisposable
+    public class Button : ContentElement
     {
-        int Handle { get; }
+        public Button()
+        {
+
+        }
     }
 }
