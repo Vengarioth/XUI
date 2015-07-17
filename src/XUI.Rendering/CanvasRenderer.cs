@@ -8,6 +8,9 @@ using XUI.Rendering.OpenGL;
 
 namespace XUI.Rendering
 {
+    /// <summary>
+    /// Terrible terrible renderer, does the job for now.
+    /// </summary>
     public class CanvasRenderer
     {
         public Canvas Canvas { get; private set; }
@@ -91,6 +94,17 @@ void main (void)
         {
             shader.Use();
             shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
+
+            var vertices = new float[] {
+                -0.8f, -0.8f, 0f, 1f,
+                 0.8f, -0.8f, 0f, 1f,
+                 0.8f,  0.8f, 0f, 1f,
+                -0.8f,  0.8f, 0f, 1f
+            };
+
+            var verticesInBytes = new byte[vertices.Length * sizeof(float)];
+            Buffer.BlockCopy(vertices, 0, verticesInBytes, 0, verticesInBytes.Length);
+            vertexBuffer.SetData(ref verticesInBytes);
 
             GL.BindVertexArray(vao.Handle);
             GL.DrawElements(BeginMode.Triangles, indexCount, DrawElementsType.UnsignedInt, 0);
