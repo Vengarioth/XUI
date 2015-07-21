@@ -27,14 +27,17 @@ namespace XUI.Example
             grid = new Grid();
             button1 = new Button();
             button2 = new Button();
-
             canvasRenderer = new CanvasRenderer(canvas);
+
+            button1.Width = 100;
+            button1.Height = 30;
+
+            button2.Width = 200;
+            button2.Height = 70;
 
             canvas.Child = grid;
             grid.Add(button1);
             grid.Add(button2);
-
-            Grid.SetMargin(button1, new Thickness());
 
             button1.Background = new ColorBrush() { Color = new Color() { R = 0f, G = 1f, B = 1f, A = 1f } };
             button2.Background = new ColorBrush() { Color = new Color() { R = 1f, G = 0f, B = 1f, A = 1f } };
@@ -54,6 +57,8 @@ namespace XUI.Example
         {
             base.OnResize(e);
 
+            canvas.Width = ClientRectangle.Width;
+            canvas.Height = ClientRectangle.Height;
             GL.Viewport(ClientRectangle);
         }
 

@@ -87,19 +87,28 @@ void main (void)
             if (Canvas.Child == null)
                 return;
 
-            RenderElement(Canvas.Child);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            RenderElement(Canvas.Child, new Rectangle(0, 0, Canvas.Width, Canvas.Height));
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
         }
 
-        private void RenderElement(UIElement element)
+        private void RenderElement(UIElement element, Rectangle targetSpace)
         {
             shader.Use();
             shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
 
+            var space = element.Arrange(targetSpace);
+
+            var x = (float)((space.X / Canvas.Width) * 2f - 1f);
+            var y = (float)((space.Y / Canvas.Width) * 2f - 1f);
+            var width = (float)((space.X + space.Width / Canvas.Width) * 2f - 1f);
+            var height = (float)((space.Y + space.Height / Canvas.Height) * 2f - 1f);
+            
             var vertices = new float[] {
-                -0.8f, -0.8f, 0f, 1f,
-                 0.8f, -0.8f, 0f, 1f,
-                 0.8f,  0.8f, 0f, 1f,
-                -0.8f,  0.8f, 0f, 1f
+                x,     y,      0f, 1f,
+                width, y,      0f, 1f,
+                width, height, 0f, 1f,
+                x,     height, 0f, 1f
             };
 
             var verticesInBytes = new byte[vertices.Length * sizeof(float)];
@@ -108,6 +117,11 @@ void main (void)
 
             GL.BindVertexArray(vao.Handle);
             GL.DrawElements(BeginMode.Triangles, indexCount, DrawElementsType.UnsignedInt, 0);
+
+            if(element is LayoutElement)
+            {
+                var layoutElement = element as LayoutElement;
+            }
         }
     }
 }

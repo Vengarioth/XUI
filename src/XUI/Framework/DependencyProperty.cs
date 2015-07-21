@@ -11,19 +11,21 @@ namespace XUI.Framework
         public string Name { get; private set; }
         public Type Type { get; private set; }
         public Type OwnerType { get; private set; }
+        public object DefaultValue { get; private set; }
 
         private Dictionary<UIElement, object> properties;
 
-        public static DependencyProperty Register(string propertyName, Type propertyType, Type ownerType)
+        public static DependencyProperty Register(string propertyName, Type propertyType, Type ownerType, object defaultValue = null)
         {
-            return new DependencyProperty(propertyName, propertyType, ownerType);
+            return new DependencyProperty(propertyName, propertyType, ownerType, defaultValue);
         }
 
-        private DependencyProperty(string name, Type type, Type ownerType)
+        private DependencyProperty(string name, Type type, Type ownerType, object defaultValue)
         {
             Name = name;
             Type = type;
             OwnerType = ownerType;
+            DefaultValue = defaultValue;
 
             properties = new Dictionary<UIElement, object>();
         }
@@ -32,7 +34,8 @@ namespace XUI.Framework
         {
             if (!properties.ContainsKey(propertyHolder))
             {
-                properties.Add(propertyHolder, default(Type));
+
+                properties.Add(propertyHolder, DefaultValue);
                 propertyHolder.AddDependencyProperty(this);
             }
 

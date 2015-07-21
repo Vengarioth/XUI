@@ -11,6 +11,10 @@ namespace XUI
     {
         private List<DependencyProperty> dependencyProperties = new List<DependencyProperty>();
 
+        public abstract Size Measure(Size availableSize);
+
+        public abstract Rectangle Arrange(Rectangle availableSpace);
+
         protected object GetValue(DependencyProperty dependencyProperty)
         {
             return dependencyProperty.GetValue(this);
