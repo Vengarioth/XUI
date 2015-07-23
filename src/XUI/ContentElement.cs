@@ -8,8 +8,19 @@ namespace XUI
 {
     public abstract class ContentElement : VisualElement
     {
+        public UIElement Child { get; set; }
+
+        public override IEnumerable<UIElement> GetChildren()
+        {
+            if (Child == null)
+                return new UIElement[0];
+            else
+                return new UIElement[] { Child };
+        }
+
         public override Rectangle Arrange(Rectangle availableSpace)
         {
+            Space = availableSpace;
             return availableSpace;
         }
 

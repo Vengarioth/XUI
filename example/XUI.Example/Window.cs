@@ -15,8 +15,6 @@ namespace XUI.Example
     {
         private Canvas canvas;
         private Grid grid;
-        private Button button1;
-        private Button button2;
 
         private CanvasRenderer canvasRenderer;
 
@@ -25,22 +23,19 @@ namespace XUI.Example
         {
             canvas = new Canvas(1280, 720);
             grid = new Grid();
-            button1 = new Button();
-            button2 = new Button();
             canvasRenderer = new CanvasRenderer(canvas);
 
-            button1.Width = 100;
-            button1.Height = 30;
-
-            button2.Width = 200;
-            button2.Height = 70;
-
             canvas.Child = grid;
-            grid.Add(button1);
-            grid.Add(button2);
 
-            button1.Background = new ColorBrush() { Color = new Color() { R = 0f, G = 1f, B = 1f, A = 1f } };
-            button2.Background = new ColorBrush() { Color = new Color() { R = 1f, G = 0f, B = 1f, A = 1f } };
+            var rnd = new Random(DateTime.Now.Second);
+            for(int i = 0; i < 10; i++)
+            {
+                var button = new Button();
+                button.Width = Math.Max(50, rnd.NextDouble() * 400);
+                button.Height = 80;
+                button.Background = new ColorBrush() { Color = new Color() { R = 1f, G = 0f, B = 1f, A = 1f } };
+                grid.Add(button);
+            }
 
 #if DEBUG
             OpenTK.Graphics.GraphicsContext.CurrentContext.ErrorChecking = true;
@@ -59,14 +54,13 @@ namespace XUI.Example
 
             canvas.Width = ClientRectangle.Width;
             canvas.Height = ClientRectangle.Height;
+            canvas.UpdateLayout();
             GL.Viewport(ClientRectangle);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            canvas.Update();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

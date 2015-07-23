@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace XUI
 {
-    public class Button : ContentElement
+    public class TextBlock : ContentElement
     {
-
-
-        public Button()
+        public string Text { get; set; }
+        
+        public TextBlock()
         {
 
         }

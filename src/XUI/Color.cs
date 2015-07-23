@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XUI
 {
-    public class Color
+    public struct Color
     {
         public double R { get; set; }
         public double G { get; set; }

@@ -19,14 +19,12 @@ namespace XUI
             Height = height;
         }
 
-        public void Update()
+        public void UpdateLayout()
         {
-            
-        }
+            if (Child == null)
+                return;
 
-        public void PerformDrawingOperations()
-        {
-
+            Child.Arrange(new Rectangle(0, 0, Width, Height));
         }
 
     }

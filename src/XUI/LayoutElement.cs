@@ -10,16 +10,56 @@ namespace XUI
     {
         protected List<UIElement> children = new List<UIElement>();
 
+        public override IEnumerable<UIElement> GetChildren()
+        {
+            return children.AsEnumerable();
+        }
+
         public override Rectangle Arrange(Rectangle availableSpace)
         {
-            var size = Measure(new Size(availableSpace.Width, availableSpace.Height));
+            double totalHeight = 0;
+            double availableWidth = availableSpace.Width;
+            double currentRowHeight = 0;
 
-            return new Rectangle(availableSpace.X, availableSpace.Y, size.Width, size.Height);
+            foreach (var child in children)
+            {
+                var size = child.Measure(new Size(availableSpace.Width, availableSpace.Height));
+
+                if (size.Width > availableWidth)
+                {
+                    //break and start a new row
+                    totalHeight += currentRowHeight;
+                    
+                    child.Arrange(new Rectangle(0,
+                    totalHeight,
+                    size.Width,
+                    size.Height));
+
+                    availableWidth = availableSpace.Width - size.Width;
+                    currentRowHeight = size.Height;
+                }
+                else
+                {
+                    child.Arrange(new Rectangle(availableSpace.Width - availableWidth,
+                    totalHeight,
+                    size.Width,
+                    size.Height));
+
+                    //add to current row
+                    availableWidth -= size.Width;
+                    currentRowHeight = Math.Max(currentRowHeight, size.Height);
+                }
+            }
+
+            Space = availableSpace;
+
+            return availableSpace;
         }
 
         public override Size Measure(Size availableSize)
         {
-            List<Size> rows = new List<Size>();
+            double maxWidth = 0;
+            double totalHeight = 0;
 
             double availableWidth = availableSize.Width;
             double rowHeight = 0;
@@ -31,7 +71,9 @@ namespace XUI
                 if (size.Width > availableWidth)
                 {
                     //break and start a new row
-                    rows.Add(new Size(availableSize.Width - availableWidth, rowHeight));
+                    maxWidth = Math.Max(maxWidth, availableSize.Width - availableWidth);
+                    totalHeight += rowHeight;
+                    
                     availableWidth = availableSize.Width - size.Width;
                     rowHeight = size.Height;
                 }
@@ -44,9 +86,10 @@ namespace XUI
             }
 
             //add last row
-            rows.Add(new Size(availableSize.Width - availableWidth, rowHeight));
+            maxWidth = Math.Max(maxWidth, availableSize.Width - availableWidth);
+            totalHeight += rowHeight;
 
-            return new Size(rows.Sum(e => e.Width), rows.Sum(e => e.Height));
+            return new Size(maxWidth, totalHeight);
         }
 
         public void Add(UIElement element)

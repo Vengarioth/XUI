@@ -10,10 +10,12 @@ namespace XUI
     public abstract class UIElement
     {
         private List<DependencyProperty> dependencyProperties = new List<DependencyProperty>();
-
+        
         public abstract Size Measure(Size availableSize);
 
         public abstract Rectangle Arrange(Rectangle availableSpace);
+
+        public abstract IEnumerable<UIElement> GetChildren();
 
         protected object GetValue(DependencyProperty dependencyProperty)
         {

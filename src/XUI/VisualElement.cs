@@ -36,5 +36,7 @@ namespace XUI
             get { return (double)GetValue(heightProperty); }
             set { SetValue(heightProperty, value); }
         }
+
+        public Rectangle Space { get; protected set; }
     }
 }

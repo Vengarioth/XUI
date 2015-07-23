@@ -94,33 +94,43 @@ void main (void)
 
         private void RenderElement(UIElement element, Rectangle targetSpace)
         {
-            shader.Use();
-            shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
-
-            var space = element.Arrange(targetSpace);
-
-            var x = (float)((space.X / Canvas.Width) * 2f - 1f);
-            var y = (float)((space.Y / Canvas.Width) * 2f - 1f);
-            var width = (float)((space.X + space.Width / Canvas.Width) * 2f - 1f);
-            var height = (float)((space.Y + space.Height / Canvas.Height) * 2f - 1f);
-            
-            var vertices = new float[] {
-                x,     y,      0f, 1f,
-                width, y,      0f, 1f,
-                width, height, 0f, 1f,
-                x,     height, 0f, 1f
-            };
-
-            var verticesInBytes = new byte[vertices.Length * sizeof(float)];
-            Buffer.BlockCopy(vertices, 0, verticesInBytes, 0, verticesInBytes.Length);
-            vertexBuffer.SetData(ref verticesInBytes);
-
-            GL.BindVertexArray(vao.Handle);
-            GL.DrawElements(BeginMode.Triangles, indexCount, DrawElementsType.UnsignedInt, 0);
-
-            if(element is LayoutElement)
+            if(element is VisualElement)
             {
-                var layoutElement = element as LayoutElement;
+                var visualElement = element as VisualElement;
+                
+                shader.Use();
+                shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
+
+                var space = visualElement.Space;
+
+                float x = (float)(space.X / Canvas.Width);
+                float y = 1f - (float)(space.Y / Canvas.Height);
+                float width = (float)((space.X + space.Width) / Canvas.Width);
+                float height = y - (float)(space.Height / Canvas.Height);
+
+                x = (x * 2f) - 1f;
+                y = (y * 2f) - 1f;
+                width = (width * 2f) - 1f;
+                height = (height * 2f) - 1f;
+
+                var vertices = new float[] {
+                    x,     height,      0f, 1f,
+                    width, height,      0f, 1f,
+                    width, y, 0f, 1f,
+                    x,     y, 0f, 1f
+                };
+
+                var verticesInBytes = new byte[vertices.Length * sizeof(float)];
+                Buffer.BlockCopy(vertices, 0, verticesInBytes, 0, verticesInBytes.Length);
+                vertexBuffer.SetData(ref verticesInBytes);
+
+                GL.BindVertexArray(vao.Handle);
+                GL.DrawElements(BeginMode.Triangles, indexCount, DrawElementsType.UnsignedInt, 0);
+            }
+            
+            foreach(var child in element.GetChildren())
+            {
+                RenderElement(child as UIElement, targetSpace);
             }
         }
     }

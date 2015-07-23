@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XUI
 {
-    public class Thickness
+    public struct Thickness
     {
         public double Left { get; set; }
         public double Top { get; set; }
