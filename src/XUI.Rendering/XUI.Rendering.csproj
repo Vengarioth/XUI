@@ -57,6 +57,13 @@
     <Compile Include="OpenGL\ProgramFactory.cs" />
     <Compile Include="OpenGL\ShaderProgramSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vector\BlendMode.cs" />
+    <Compile Include="Vector\CompositMode.cs" />
+    <Compile Include="Vector\Paths\Path.cs" />
+    <Compile Include="Vector\Paths\PathSegment.cs" />
+    <Compile Include="Vector\Paths\QuadraticCurveSegment.cs" />
+    <Compile Include="Vector\Segment.cs" />
+    <Compile Include="Vector\Shape.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -84,11 +84,47 @@ void main (void)
 
         public void Render()
         {
+            RenderVector();
+            return;
+
             if (Canvas.Child == null)
                 return;
 
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
             RenderElement(Canvas.Child, new Rectangle(0, 0, Canvas.Width, Canvas.Height));
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+        }
+
+        private void RenderVector()
+        {
+            var segment = new Vector.Paths.QuadraticCurveSegment(new Point(0, 0), new Point(0.2, 0.8), new Point(1, 1));
+
+            shader.Use();
+            shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
+            
+            var vertices = new float[]
+            {
+                (float)segment.Start.X, (float)segment.Start.Y, 0f, 1f,
+                (float)segment.End.X, (float)segment.End.Y, 0f, 1f,
+                (float)segment.ControlPoint.X, (float)segment.ControlPoint.Y, 0f, 1f
+            };
+
+            var verticesInBytes = new byte[vertices.Length * sizeof(float)];
+            Buffer.BlockCopy(vertices, 0, verticesInBytes, 0, verticesInBytes.Length);
+            vertexBuffer.SetData(ref verticesInBytes);
+
+            var indices = new uint[] {
+                0, 1, 2
+            };
+            indexCount = indices.Length;
+
+            var indicesInBytes = new byte[indices.Length * sizeof(uint)];
+            Buffer.BlockCopy(indices, 0, indicesInBytes, 0, indicesInBytes.Length);
+            indexBuffer.SetData(ref indicesInBytes);
+
+            GL.BindVertexArray(vao.Handle);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            GL.DrawElements(BeginMode.Triangles, indexCount, DrawElementsType.UnsignedInt, 0);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
         }
 
