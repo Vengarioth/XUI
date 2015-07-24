@@ -55,6 +55,13 @@
     <Compile Include="TextBlock.cs" />
     <Compile Include="Thickness.cs" />
     <Compile Include="UIElement.cs" />
+    <Compile Include="Vector\BlendMode.cs" />
+    <Compile Include="Vector\CompositMode.cs" />
+    <Compile Include="Vector\LineSegment.cs" />
+    <Compile Include="Vector\Path.cs" />
+    <Compile Include="Vector\Segment.cs" />
+    <Compile Include="Vector\QuadraticCurveSegment.cs" />
+    <Compile Include="Vector\Shape.cs" />
     <Compile Include="VisualElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering.Vector.Paths
+namespace XUI.Vector
 {
-    public class Path
+    public enum CompositMode
     {
-
+        Normal = 0,
+        Add = 1,
+        Subtract = 2
     }
 }

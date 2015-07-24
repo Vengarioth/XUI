@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering.Vector
+namespace XUI.Vector
 {
-    public enum BlendMode
+    public abstract class Segment
     {
-        Normal = 0
+        public Point Start { get; set; }
+        public Point End { get; set; }
     }
 }

@@ -14,9 +14,7 @@ namespace XUI.Rendering.OpenGL
         public BufferTarget Target { get; private set; }
         public BufferUsageHint UsageHint { get; private set; }
         public int Size { get; private set; }
-
-        private IntPtr syncPointer;
-
+        
         internal GLBuffer(int bufferHandle, BufferTarget bufferTarget, BufferUsageHint bufferUsageHint, int size)
         {
             Handle = bufferHandle;
@@ -25,27 +23,9 @@ namespace XUI.Rendering.OpenGL
             Size = size;
         }
 
-        public void LockBuffer()
+        public void Bind()
         {
-            if (syncPointer != IntPtr.Zero)
-            {
-                GL.DeleteSync(syncPointer);
-            }
-
-            syncPointer = GL.FenceSync(SyncCondition.SyncGpuCommandsComplete, WaitSyncFlags.None);
-        }
-
-        public void WaitBuffer()
-        {
-            if (syncPointer != IntPtr.Zero)
-            {
-                while (true)
-                {
-                    var waitReturn = GL.ClientWaitSync(syncPointer, ClientWaitSyncFlags.SyncFlushCommandsBit, 1);
-                    if (waitReturn == WaitSyncStatus.AlreadySignaled || waitReturn == WaitSyncStatus.ConditionSatisfied)
-                        return;
-                }
-            }
+            GL.BindBuffer(Target, Handle);
         }
 
         public void SetData(ref byte[] data)

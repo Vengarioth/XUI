@@ -26,6 +26,10 @@ namespace XUI.Rendering.OpenGL
             {
                 case ActiveAttribType.Float:
                     return sizeof(float);
+                case ActiveAttribType.FloatVec2:
+                    return sizeof(float) * 2;
+                case ActiveAttribType.FloatVec3:
+                    return sizeof(float) * 3;
                 case ActiveAttribType.FloatVec4:
                     return sizeof(float) * 4;
             }
@@ -53,6 +57,10 @@ namespace XUI.Rendering.OpenGL
             {
                 case ActiveAttribType.Float:
                     return 1;
+                case ActiveAttribType.FloatVec2:
+                    return 2;
+                case ActiveAttribType.FloatVec3:
+                    return 3;
                 case ActiveAttribType.FloatVec4:
                     return 4;
             }

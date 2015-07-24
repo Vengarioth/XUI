@@ -33,6 +33,9 @@
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="Poly2Tri">
+      <HintPath>..\..\lib\Poly2Tri.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,16 +57,12 @@
     <Compile Include="OpenGL\GLUniformBufferElement.cs" />
     <Compile Include="OpenGL\GLVertexArrayObject.cs" />
     <Compile Include="OpenGL\GLVertexSignature.cs" />
+    <Compile Include="OpenGL\BufferGenerator.cs" />
     <Compile Include="OpenGL\ProgramFactory.cs" />
     <Compile Include="OpenGL\ShaderProgramSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vector\BlendMode.cs" />
-    <Compile Include="Vector\CompositMode.cs" />
-    <Compile Include="Vector\Paths\Path.cs" />
-    <Compile Include="Vector\Paths\PathSegment.cs" />
-    <Compile Include="Vector\Paths\QuadraticCurveSegment.cs" />
-    <Compile Include="Vector\Segment.cs" />
-    <Compile Include="Vector\Shape.cs" />
+    <Compile Include="VectorGraphics\Poly2TriTessellator.cs" />
+    <Compile Include="VectorGraphics\VectorMesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

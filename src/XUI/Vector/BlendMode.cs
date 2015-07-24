@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering.Vector.Paths
+namespace XUI.Vector
 {
-    public abstract class PathSegment
+    public enum BlendMode
     {
-
+        Normal = 0
     }
 }

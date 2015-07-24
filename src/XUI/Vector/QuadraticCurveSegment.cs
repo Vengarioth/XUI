@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace XUI.Rendering.Vector.Paths
+namespace XUI.Vector
 {
-    public class QuadraticCurveSegment : PathSegment
+    public class QuadraticCurveSegment : Segment
     {
-        public Point Start { get; set; }
-        public Point End { get; set; }
         public Point ControlPoint { get; set; }
+        public bool Convex { get; set; }
 
         public Point P1
         {

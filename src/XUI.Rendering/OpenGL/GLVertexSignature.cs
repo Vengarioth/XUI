@@ -12,7 +12,7 @@ namespace XUI.Rendering.OpenGL
 
         public GLVertexSignature(GLAttribute[] attributes)
         {
-            Attributes = attributes;
+            Attributes = attributes.OrderBy(e => e.Location).ToArray();
         }
     }
 }
