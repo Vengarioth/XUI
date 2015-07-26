@@ -31,8 +31,7 @@ namespace XUI.Rendering
                 VertexSource = @"
 #version 410
 
-layout(location = 0)in vec4 in_pos;
-layout(location = 1)in vec2 in_uv;
+layout(location = 0)in vec4 in_pos_uv;
 layout(location = 2)in float in_sign;
 
 layout(location = 0)out vec2 out_uv;
@@ -40,8 +39,8 @@ layout(location = 1)out float out_sign;
 
 void main(void)
 {
-   gl_Position = in_pos;
-   out_uv = in_uv;
+   gl_Position = vec4(in_pos_uv.x, in_pos_uv.y, 0f, 1f);
+   out_uv = vec2(in_pos_uv.z, in_pos_uv.w);
    out_sign = in_sign;
 }",
                 HasFragmentStage = true,
@@ -137,6 +136,27 @@ void main (void)
         public void Render()
         {
             RenderPath();
+        }
+
+        public void RenderShape(Shape shape)
+        {
+            if (vectorMesh != null)
+                vectorMesh.Dispose();
+
+            if (vao != null)
+                vao.Dispose();
+
+            GL.Disable(EnableCap.CullFace);
+            shader.Use();
+            shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
+
+            vectorMesh = Poly2TriTessellator.TriangulateShape(shape);
+            vao = shader.GetVAO(vectorMesh.VertexBuffer, vectorMesh.IndexBuffer);
+
+            GL.BindVertexArray(vao.Handle);
+            GL.DrawElements(BeginMode.Triangles, vectorMesh.IndexCount, DrawElementsType.UnsignedInt, 0);
+            GL.BindVertexArray(0);
+            GL.Enable(EnableCap.CullFace);
         }
 
         private void RenderPath()

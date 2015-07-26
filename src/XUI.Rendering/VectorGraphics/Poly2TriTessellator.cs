@@ -43,10 +43,10 @@ namespace XUI.Rendering.VectorGraphics
 
                         float sign = quadraticCurveSegment.Convex ? 1f : -1f;
 
-                        //write vertex, uv, sign
-                        vertexBufferGenerator.WriteFloat((float)quadraticCurveSegment.Start.X, (float)quadraticCurveSegment.Start.Y, 0f, 1f, 0f, 0f, sign);
-                        vertexBufferGenerator.WriteFloat((float)quadraticCurveSegment.End.X, (float)quadraticCurveSegment.End.Y, 0f, 1f, 1f, 1f, sign);
-                        vertexBufferGenerator.WriteFloat((float)quadraticCurveSegment.ControlPoint.X, (float)quadraticCurveSegment.ControlPoint.Y, 0f, 1f, 0.5f, 0f, sign);
+                        //write vertex x y, uv, sign
+                        vertexBufferGenerator.WriteFloat((float)quadraticCurveSegment.Start.X, (float)quadraticCurveSegment.Start.Y, 0f, 0f, sign);
+                        vertexBufferGenerator.WriteFloat((float)quadraticCurveSegment.End.X, (float)quadraticCurveSegment.End.Y, 1f, 1f, sign);
+                        vertexBufferGenerator.WriteFloat((float)quadraticCurveSegment.ControlPoint.X, (float)quadraticCurveSegment.ControlPoint.Y, 0.5f, 0f, sign);
                         indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
                     }
                     else
@@ -57,7 +57,8 @@ namespace XUI.Rendering.VectorGraphics
 
                 if(polygon == null)
                 {
-                    polygon = new Polygon(points);
+                    if(points.Count >= 3)
+                        polygon = new Polygon(points);
                 }
                 else
                 {
@@ -74,17 +75,26 @@ namespace XUI.Rendering.VectorGraphics
                 points.Clear();
             }
             
-            P2T.CreateContext(TriangulationAlgorithm.DTSweep);
-            P2T.Triangulate(polygon);
-            
-            foreach(var triangle in polygon.Triangles)
+            if(polygon != null && polygon.Points.Count >= 3)
             {
-                vertexBufferGenerator.WriteFloat((float)triangle.Points[0].X, (float)triangle.Points[0].Y, 0f, 1f, 0f, 1f, 1f);
-                vertexBufferGenerator.WriteFloat((float)triangle.Points[1].X, (float)triangle.Points[1].Y, 0f, 1f, 0f, 1f, 1f);
-                vertexBufferGenerator.WriteFloat((float)triangle.Points[2].X, (float)triangle.Points[2].Y, 0f, 1f, 0f, 1f, 1f);
-                indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
-            }
+                try
+                {
+                    P2T.CreateContext(TriangulationAlgorithm.DTSweep);
+                    P2T.Triangulate(polygon);
+                    foreach (var triangle in polygon.Triangles)
+                    {
+                        vertexBufferGenerator.WriteFloat((float)triangle.Points[0].X, (float)triangle.Points[0].Y, 0f, 1f, 1f);
+                        vertexBufferGenerator.WriteFloat((float)triangle.Points[1].X, (float)triangle.Points[1].Y, 0f, 1f, 1f);
+                        vertexBufferGenerator.WriteFloat((float)triangle.Points[2].X, (float)triangle.Points[2].Y, 0f, 1f, 1f);
+                        indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
+                    }
+                }
+                catch(Exception e)
+                {
 
+                }
+            }
+            
             var vertexBuffer = BufferFactory.Allocate(BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw, vertexBufferGenerator.GetBuffer());
             var indexBuffer = BufferFactory.Allocate(BufferTarget.ElementArrayBuffer, BufferUsageHint.StaticDraw, indexBufferGenerator.GetBuffer());
 

@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using XUI.Rendering;
+using XUI.Vector;
 
 namespace XUI.Example
 {
@@ -17,6 +18,9 @@ namespace XUI.Example
         private Grid grid;
 
         private CanvasRenderer canvasRenderer;
+
+        private int i = 0;
+        private TTF.TrueTypeFont ttf;
 
         public Window()
             : base(1280, 720, GraphicsMode.Default, "XUI Example", GameWindowFlags.Default, DisplayDevice.Default, 4, 0, GraphicsContextFlags.Debug)
@@ -36,6 +40,11 @@ namespace XUI.Example
                 button.Background = new ColorBrush() { Color = new Color() { R = 1f, G = 0f, B = 1f, A = 1f } };
                 grid.Add(button);
             }
+
+            Keyboard.KeyDown += Keyboard_KeyDown;
+
+            var reader = new XUI.TTF.TTFReader();
+            ttf = reader.Read(System.IO.File.OpenRead("./segoeui.ttf"));
 
 #if DEBUG
             OpenTK.Graphics.GraphicsContext.CurrentContext.ErrorChecking = true;
@@ -63,13 +72,21 @@ namespace XUI.Example
             base.OnUpdateFrame(e);
         }
 
+        private void Keyboard_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            if (e.Key == OpenTK.Input.Key.Right)
+                i = ++i % ttf.Glyf.Glyphs.Length;
+        }
+
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            
+            var shape = ttf.Glyf.Glyphs[i].GetAsShape();
 
-            canvasRenderer.Render();
+            canvasRenderer.RenderShape(shape);
 
             SwapBuffers();
         }
