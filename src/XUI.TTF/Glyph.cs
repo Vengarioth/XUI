@@ -32,23 +32,30 @@ namespace XUI.TTF
             double factor = 2000.0;
 
             int from = 0;
-            int to = 0;
+            int to = -1;
 
             for(int e = 0; e < EndPtsOfContours.Length; e++)
             {
-                from = to;
+                from = to + 1;
                 to = EndPtsOfContours[e];
+
+                Point a, b;
 
                 var path = new Path();
                 var winding = 0.0;
-                for (int i = from; i <= to; i++)
+                for (int i = from; i < to; i++)
                 {
-                    var a = new Point(Points[i].X / factor, Points[i].Y / factor);
-                    var b = new Point(Points[(i + 1) % ((to - from) + 1)].X / factor, Points[(i + 1) % ((to - from) + 1)].Y / factor);
+                    a = new Point(Points[i].X / factor, Points[i].Y / factor);
+                    b = new Point(Points[i + 1].X / factor, Points[i + 1].Y / factor);
                     path.AddPathSegment(new LineSegment(a, b));
 
                     winding += (b.X - a.X) * (b.Y + a.Y);
                 }
+
+                a = new Point(Points[to].X / factor, Points[to].Y / factor);
+                b = new Point(Points[from].X / factor, Points[from].Y / factor);
+                path.AddPathSegment(new LineSegment(a, b));
+                winding += (b.X - a.X) * (b.Y + a.Y);
 
                 if (winding >= 0.0)
                     path.CompositMode = CompositMode.Add;

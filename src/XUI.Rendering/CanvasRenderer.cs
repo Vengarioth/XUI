@@ -32,31 +32,32 @@ namespace XUI.Rendering
 #version 410
 
 layout(location = 0)in vec4 in_pos_uv;
-layout(location = 2)in float in_sign;
+layout(location = 2)in vec4 in_color_sign;
 
 layout(location = 0)out vec2 out_uv;
-layout(location = 1)out float out_sign;
+layout(location = 1)out vec3 out_color;
+layout(location = 2)out float out_sign;
 
 void main(void)
 {
    gl_Position = vec4(in_pos_uv.x, in_pos_uv.y, 0f, 1f);
    out_uv = vec2(in_pos_uv.z, in_pos_uv.w);
-   out_sign = in_sign;
+   out_color = in_color_sign.xyz;
+   out_sign = in_color_sign.w;
 }",
                 HasFragmentStage = true,
                 FragmentSource = @"
 #version 410
 
-uniform vec4 color;
-
 layout(location = 0)in vec2 uv;
-layout(location = 1)in float sign;
+layout(location = 1)in vec3 color;
+layout(location = 2)in float sign;
 
 layout(location = 0)out vec4 frag_color;
 
 void main (void)
 {
-    vec4 c = color;
+    vec4 c = vec4(color, 1.0);
 
     vec2 px = dFdx(uv);
     vec2 py = dFdy(uv);
@@ -148,7 +149,6 @@ void main (void)
 
             GL.Disable(EnableCap.CullFace);
             shader.Use();
-            shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
 
             vectorMesh = Poly2TriTessellator.TriangulateShape(shape);
             vao = shader.GetVAO(vectorMesh.VertexBuffer, vectorMesh.IndexBuffer);
@@ -163,7 +163,6 @@ void main (void)
         {
             GL.Disable(EnableCap.CullFace);
             shader.Use();
-            shader.Uniforms[0].SetFloatComponentType(new float[] { 1f, 1f, 1f, 1f });
             
             GL.BindVertexArray(vao.Handle);
             GL.DrawElements(BeginMode.Triangles, vectorMesh.IndexCount, DrawElementsType.UnsignedInt, 0);
