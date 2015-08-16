@@ -16,6 +16,8 @@ namespace XUI.Rendering.VectorGraphics
 
         public static VectorMesh TriangulateShape(Shape shape)
         {
+            P2T.CreateContext(TriangulationAlgorithm.DTSweep);
+
             Polygon polygon = null;
             List<PolygonPoint> points = new List<PolygonPoint>();
 
@@ -25,7 +27,6 @@ namespace XUI.Rendering.VectorGraphics
 
             foreach (var path in shape.Paths)
             {
-                
                 foreach (var segment in path.Segments)
                 {
                     if(segment is QuadraticCurveSegment)
@@ -55,32 +56,20 @@ namespace XUI.Rendering.VectorGraphics
                     }
                 }
 
-                if(polygon == null)
+                if(points.Count >= 3)
                 {
-                    if(points.Count >= 3)
-                        polygon = new Polygon(points);
-                }
-                else
-                {
-                    if (path.CompositMode == CompositMode.Subtract)
-                    {
-                        polygon.AddHole(new Polygon(points));
-                    }
-                    else
-                    {
-                        polygon.AddPoints(points);
-                    }
-                }
 
-                points.Clear();
-            }
-            
-            if(polygon != null && polygon.Points.Count >= 3)
-            {
-                try
-                {
-                    P2T.CreateContext(TriangulationAlgorithm.DTSweep);
-                    P2T.Triangulate(polygon);
+                    polygon = new Polygon(points);
+
+                    try
+                    {
+                        P2T.Triangulate(polygon);
+                    }
+                    catch(Exception e)
+                    {
+                        System.Diagnostics.Debug.WriteLine(e.Message);
+                    }
+
                     foreach (var triangle in polygon.Triangles)
                     {
                         vertexBufferGenerator.WriteFloat((float)triangle.Points[0].X, (float)triangle.Points[0].Y, 0f, 1f, 1f);
@@ -89,10 +78,9 @@ namespace XUI.Rendering.VectorGraphics
                         indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
                     }
                 }
-                catch(Exception e)
-                {
+                
 
-                }
+                points.Clear();
             }
             
             var vertexBuffer = BufferFactory.Allocate(BufferTarget.ArrayBuffer, BufferUsageHint.StaticDraw, vertexBufferGenerator.GetBuffer());

@@ -29,21 +29,35 @@ namespace XUI.TTF
         public Shape GetAsShape()
         {
             var shape = new Shape();
+            double factor = 2000.0;
 
-            var path = new Path();
-            
-            for(int i = 0; i < Points.Length; i++)
+            int from = 0;
+            int to = 0;
+
+            for(int e = 0; e < EndPtsOfContours.Length; e++)
             {
-                double factor = 2000.0;
+                from = to;
+                to = EndPtsOfContours[e];
 
-                path.AddPathSegment(new LineSegment(
-                    new Point(Points[i].X / factor, Points[i].Y / factor),
-                    new Point(Points[(i + 1) % Points.Length].X / factor, Points[(i + 1) % Points.Length].Y / factor)
-                ));
+                var path = new Path();
+                var winding = 0.0;
+                for (int i = from; i <= to; i++)
+                {
+                    var a = new Point(Points[i].X / factor, Points[i].Y / factor);
+                    var b = new Point(Points[(i + 1) % ((to - from) + 1)].X / factor, Points[(i + 1) % ((to - from) + 1)].Y / factor);
+                    path.AddPathSegment(new LineSegment(a, b));
+
+                    winding += (b.X - a.X) * (b.Y + a.Y);
+                }
+
+                if (winding >= 0.0)
+                    path.CompositMode = CompositMode.Add;
+                else
+                    path.CompositMode = CompositMode.Subtract;
+
+                shape.AddPath(path);
             }
-
-            shape.AddPath(path);
-
+            
             return shape;
         }
     }

@@ -2,17 +2,14 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-//Expose Internals to Testing Envrionment
-[assembly: InternalsVisibleTo("XUI.TTF.Test")]
-
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XUI.TTF")]
+[assembly: AssemblyTitle("XUI.TTF.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("XUI.TTF")]
+[assembly: AssemblyProduct("XUI.TTF.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -23,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9d4dfabd-7601-4b0c-af14-6cfef3da4304")]
+[assembly: Guid("814ecab9-3e42-4830-a6ca-3b30b1a016a6")]
 
 // Version information for an assembly consists of the following four values:
 //

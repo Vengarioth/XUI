@@ -76,6 +76,8 @@ namespace XUI.Example
         {
             if (e.Key == OpenTK.Input.Key.Right)
                 i = ++i % ttf.Glyf.Glyphs.Length;
+            if (e.Key == OpenTK.Input.Key.Left)
+                i = (--i + ttf.Glyf.Glyphs.Length) % ttf.Glyf.Glyphs.Length;
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

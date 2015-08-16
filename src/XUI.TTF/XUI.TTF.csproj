@@ -45,6 +45,15 @@
     <Compile Include="Glyph.cs" />
     <Compile Include="GlyphFlag.cs" />
     <Compile Include="Header.cs" />
+    <Compile Include="Interpreter\GraphicsState.cs" />
+    <Compile Include="Interpreter\InstructionFlag.cs" />
+    <Compile Include="Interpreter\Instruction.cs" />
+    <Compile Include="Interpreter\Instructions.cs" />
+    <Compile Include="Interpreter\InstructionStack.cs" />
+    <Compile Include="Interpreter\InstructionStream.cs" />
+    <Compile Include="Interpreter\Interpreter.cs" />
+    <Compile Include="Interpreter\OpCode.cs" />
+    <Compile Include="Interpreter\OpCodeRange.cs" />
     <Compile Include="Loca.cs" />
     <Compile Include="Maxp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
