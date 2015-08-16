@@ -58,15 +58,7 @@ namespace XUI.Rendering.VectorGraphics
                 if (segment is QuadraticCurveSegment)
                 {
                     var quadraticCurveSegment = segment as QuadraticCurveSegment;
-                    points.Add(new PolygonPoint(quadraticCurveSegment.End.X, quadraticCurveSegment.End.Y));
-                    
-                    float sign = quadraticCurveSegment.Convex ? 1f : -1f;
-                    
-                    AddVertex(vertexBufferGenerator, (float)quadraticCurveSegment.Start.X, (float)quadraticCurveSegment.Start.Y, 0f, 0f, r, g, b, sign);
-                    AddVertex(vertexBufferGenerator, (float)quadraticCurveSegment.End.X, (float)quadraticCurveSegment.End.Y, 1f, 1f, r, g, b, sign);
-                    AddVertex(vertexBufferGenerator, (float)quadraticCurveSegment.ControlPoint.X, (float)quadraticCurveSegment.ControlPoint.Y, 0.5f, 0f, r, g, b, sign);
-                    
-                    indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
+                    AddQuadraticCurveSegment(quadraticCurveSegment, points, vertexBufferGenerator, indexBufferGenerator, ref indexCount, r, g, b);
                 }
                 else if(segment is LineSegment)
                 {
@@ -79,15 +71,17 @@ namespace XUI.Rendering.VectorGraphics
                 }
             }
 
-            var polygon = new Polygon(points);
+            Polygon polygon;
 
             try
             {
+                polygon = new Polygon(points);
                 P2T.Triangulate(polygon);
             }
             catch(Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
+                return;
             }
 
             foreach (var triangle in polygon.Triangles)
@@ -102,6 +96,39 @@ namespace XUI.Rendering.VectorGraphics
         private static void AddVertex(BufferGenerator vertexBufferGenerator, float x, float y, float u, float v, float r, float g, float b, float sign)
         {
             vertexBufferGenerator.WriteFloat(x, y, u, v, r, g, b, sign);
+        }
+
+        private static void AddQuadraticCurveSegment(QuadraticCurveSegment quadraticCurveSegment, List<PolygonPoint> points, BufferGenerator vertexBufferGenerator, BufferGenerator indexBufferGenerator, ref int indexCount, float r, float g, float b, int subDiffs = 0)
+        {
+            if(subDiffs < 2)
+            {
+                var splits = quadraticCurveSegment.Split(0.5);
+                AddQuadraticCurveSegment(splits[0], points, vertexBufferGenerator, indexBufferGenerator, ref indexCount, r, g, b, subDiffs + 1);
+                AddQuadraticCurveSegment(splits[1], points, vertexBufferGenerator, indexBufferGenerator, ref indexCount, r, g, b, subDiffs + 1);
+                return;
+            }
+
+            float sign;
+
+            quadraticCurveSegment.Split(0.5);
+
+            if (quadraticCurveSegment.Convex)
+            {
+                sign = 1f;
+                points.Add(new PolygonPoint(quadraticCurveSegment.End.X, quadraticCurveSegment.End.Y));
+            }
+            else
+            {
+                sign = -1f;
+                points.Add(new PolygonPoint(quadraticCurveSegment.ControlPoint.X, quadraticCurveSegment.ControlPoint.Y));
+                points.Add(new PolygonPoint(quadraticCurveSegment.End.X, quadraticCurveSegment.End.Y));
+            }
+
+            AddVertex(vertexBufferGenerator, (float)quadraticCurveSegment.Start.X, (float)quadraticCurveSegment.Start.Y, 0f, 0f, r, g, b, sign);
+            AddVertex(vertexBufferGenerator, (float)quadraticCurveSegment.End.X, (float)quadraticCurveSegment.End.Y, 1f, 1f, r, g, b, sign);
+            AddVertex(vertexBufferGenerator, (float)quadraticCurveSegment.ControlPoint.X, (float)quadraticCurveSegment.ControlPoint.Y, 0.5f, 0f, r, g, b, sign);
+
+            indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
         }
     }
 }

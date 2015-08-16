@@ -153,10 +153,12 @@ void main (void)
             vectorMesh = Poly2TriTessellator.TriangulateShape(shape);
             vao = shader.GetVAO(vectorMesh.VertexBuffer, vectorMesh.IndexBuffer);
 
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
             GL.BindVertexArray(vao.Handle);
             GL.DrawElements(BeginMode.Triangles, vectorMesh.IndexCount, DrawElementsType.UnsignedInt, 0);
             GL.BindVertexArray(0);
             GL.Enable(EnableCap.CullFace);
+            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
         }
 
         private void RenderPath()

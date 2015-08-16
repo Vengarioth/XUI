@@ -29,7 +29,6 @@ namespace XUI.TTF
         public Shape GetAsShape()
         {
             var shape = new Shape();
-            double factor = 2000.0;
 
             int from = 0;
             int to = -1;
@@ -38,34 +37,82 @@ namespace XUI.TTF
             {
                 from = to + 1;
                 to = EndPtsOfContours[e];
-
-                Point a, b;
-
-                var path = new Path();
-                var winding = 0.0;
-                for (int i = from; i < to; i++)
-                {
-                    a = new Point(Points[i].X / factor, Points[i].Y / factor);
-                    b = new Point(Points[i + 1].X / factor, Points[i + 1].Y / factor);
-                    path.AddPathSegment(new LineSegment(a, b));
-
-                    winding += (b.X - a.X) * (b.Y + a.Y);
-                }
-
-                a = new Point(Points[to].X / factor, Points[to].Y / factor);
-                b = new Point(Points[from].X / factor, Points[from].Y / factor);
-                path.AddPathSegment(new LineSegment(a, b));
-                winding += (b.X - a.X) * (b.Y + a.Y);
-
-                if (winding >= 0.0)
-                    path.CompositMode = CompositMode.Add;
-                else
-                    path.CompositMode = CompositMode.Subtract;
-
-                shape.AddPath(path);
+                ExtractPath(shape, from, to);
             }
             
             return shape;
+        }
+
+        private void ExtractPath(Shape shape, int from, int to)
+        {
+            double factor = 2000.0;
+            var winding = 0.0;
+
+            int length = to - from;
+            Point pa, pb;
+            int a, b;
+
+            var path = new Path();
+
+            int i = 0;
+            while (i <= length)
+            {
+                a = i;
+
+                int j = i + 1;
+
+                while (j <= length && (Flags[from + j] & GlyphFlag.OnCurve) != GlyphFlag.OnCurve)
+                    j++;
+
+                b = (j) % (length + 1);
+
+                int padding = j - i;
+
+                pa = new Point(Points[from + a].X / factor, Points[from + a].Y / factor);
+                pb = new Point(Points[from + b].X / factor, Points[from + b].Y / factor);
+
+                if(padding > 2)
+                {
+                    //TODO
+                    var pc = new Point(Points[from + a + 1].X / factor, Points[from + a + 1].Y / factor);
+                    path.AddPathSegment(new QuadraticCurveSegment(pa, pc, pb) { Convex = true });
+                }
+                else if(padding == 2)
+                {
+                    var pc = new Point(Points[from + a + 1].X / factor, Points[from + a + 1].Y / factor);
+                    path.AddPathSegment(new QuadraticCurveSegment(pa, pc, pb) { Convex = true });
+                }
+                else
+                {
+                    path.AddPathSegment(new LineSegment(pa, pb));
+                }
+                
+                winding += (pb.X - pa.X) * (pb.Y + pa.Y);
+
+                i = j;
+            }
+
+            if (winding >= 0.0)
+                path.CompositMode = CompositMode.Add;
+            else
+                path.CompositMode = CompositMode.Subtract;
+
+            foreach(var segment in path.Segments)
+            {
+                if(segment is QuadraticCurveSegment)
+                {
+                    var qcs = segment as QuadraticCurveSegment;
+                    var sign = Math.Sign(((qcs.End.X - qcs.Start.X) * (qcs.ControlPoint.Y - qcs.Start.Y)) - ((qcs.End.Y - qcs.Start.Y) * (qcs.ControlPoint.X - qcs.Start.X)));
+
+                    if(path.CompositMode == CompositMode.Subtract)
+                        qcs.Convex = sign >= 0.0 ? false : true;
+                    else
+                        qcs.Convex = sign >= 0.0 ? true : false;
+
+                }
+            }
+
+            shape.AddPath(path);
         }
     }
 }

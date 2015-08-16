@@ -14,6 +14,8 @@ namespace XUI.TTF
         YByte = 4,
         Repeat = 8,
         XSignOrSame = 16,
-        YSignOrSame = 32
+        YSignOrSame = 32,
+        Reserved = 64,
+        Reserved2 = 128,
     }
 }

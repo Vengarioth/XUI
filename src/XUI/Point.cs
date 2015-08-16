@@ -17,6 +17,14 @@ namespace XUI
             Y = y;
         }
 
+        public static Point Lerp(double t, Point a, Point b)
+        {
+            return new Point(
+                (b.X - a.X) * t + a.X,
+                (b.Y - a.Y) * t + a.Y
+            );
+        }
+
         public override string ToString()
         {
             return String.Format("Point ({0}, {1})", X, Y);

@@ -35,5 +35,38 @@ namespace XUI.Vector
                 (1.0 - t) * (1.0 - t) * Start.Y + 2.0 * (1.0 - t) * t * ControlPoint.Y + t * t * End.Y
             );
         }
+
+        public QuadraticCurveSegment[] Split(double t)
+        {
+            var p = new List<Point>();
+            var q = new List<Point>();
+            var _p = new List<Point>();
+            
+            p.Add(Start);
+            p.Add(ControlPoint);
+            p.Add(End);
+
+            q.Add(p[0]);
+            q.Add(p[1]);
+            q.Add(p[2]);
+
+            while (p.Count > 1)
+            {
+                _p = new List<Point>();
+
+                for(int i = 0; i < p.Count - 1; i++)
+                {
+                    var pt = Point.Lerp(t, p[i], p[i + 1]);
+                    q.Add(pt);
+                    _p.Add(pt);
+                }
+                p = _p;
+            }
+
+            var a = new QuadraticCurveSegment(q[0], q[3], q[5]) { Convex = Convex };
+            var b = new QuadraticCurveSegment(q[5], q[4], q[2]) { Convex = Convex };
+
+            return new QuadraticCurveSegment[] { a, b };
+        }
     }
 }
