@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace XUI
 {
-    public class Brush
+    public abstract class Brush
     {
+        public bool IsVisible { get { return OnIsVisible(); } }
+
+        protected abstract bool OnIsVisible();
     }
 }

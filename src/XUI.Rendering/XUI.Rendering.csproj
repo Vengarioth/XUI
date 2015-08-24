@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,11 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Batch.cs" />
+    <Compile Include="BatchManager.cs" />
     <Compile Include="CanvasRenderer.cs" />
     <Compile Include="IGraphicsResource.cs" />
     <Compile Include="OpenGL\BufferFactory.cs" />
     <Compile Include="OpenGL\GLAttribute.cs" />
     <Compile Include="OpenGL\GLBuffer.cs" />
+    <Compile Include="OpenGL\GLTexture.cs" />
     <Compile Include="OpenGL\GLProgram.cs" />
     <Compile Include="OpenGL\GLUniform.cs" />
     <Compile Include="OpenGL\GLUniformBlock.cs" />
@@ -61,6 +65,10 @@
     <Compile Include="OpenGL\ProgramFactory.cs" />
     <Compile Include="OpenGL\ShaderProgramSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemTextRenderer.cs" />
+    <Compile Include="TexturePacking\TextureAtlas.cs" />
+    <Compile Include="TexturePacking\TextureAtlasArea.cs" />
+    <Compile Include="TexturePacking\TextureAtlasTreeNode.cs" />
     <Compile Include="VectorGraphics\Poly2TriTessellator.cs" />
     <Compile Include="VectorGraphics\VectorMesh.cs" />
   </ItemGroup>

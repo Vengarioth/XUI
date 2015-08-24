@@ -9,5 +9,10 @@ namespace XUI
     public class ColorBrush : Brush
     {
         public Color Color { get; set; }
+
+        protected override bool OnIsVisible()
+        {
+            return Color.A > 0.00001;
+        }
     }
 }

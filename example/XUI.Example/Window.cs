@@ -18,10 +18,7 @@ namespace XUI.Example
         private Grid grid;
 
         private CanvasRenderer canvasRenderer;
-
-        private int i = 0;
-        private TTF.TrueTypeFont ttf;
-
+        
         public Window()
             : base(1280, 720, GraphicsMode.Default, "XUI Example", GameWindowFlags.Default, DisplayDevice.Default, 4, 0, GraphicsContextFlags.Debug)
         {
@@ -37,14 +34,11 @@ namespace XUI.Example
                 var button = new Button();
                 button.Width = Math.Max(50, rnd.NextDouble() * 400);
                 button.Height = 80;
-                button.Background = new ColorBrush() { Color = new Color() { R = 1f, G = 0f, B = 1f, A = 1f } };
+                button.Background = new ColorBrush() { Color = new Color() { R = 1f, G = 1f, B = 1f, A = 1f } };
+                button.Margin = new Thickness(1.0, 1.0, 1.0, 1.0);
+                button.Child = new TextBlock() { Text = "Button " + i };
                 grid.Add(button);
             }
-
-            Keyboard.KeyDown += Keyboard_KeyDown;
-
-            var reader = new XUI.TTF.TTFReader();
-            ttf = reader.Read(System.IO.File.OpenRead("./segoeui.ttf"));
 
 #if DEBUG
             OpenTK.Graphics.GraphicsContext.CurrentContext.ErrorChecking = true;
@@ -72,23 +66,13 @@ namespace XUI.Example
             base.OnUpdateFrame(e);
         }
 
-        private void Keyboard_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
-        {
-            if (e.Key == OpenTK.Input.Key.Right)
-                i = ++i % ttf.Glyf.Glyphs.Length;
-            if (e.Key == OpenTK.Input.Key.Left)
-                i = (--i + ttf.Glyf.Glyphs.Length) % ttf.Glyf.Glyphs.Length;
-        }
-
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
-            var shape = ttf.Glyf.Glyphs[i].GetAsShape();
 
-            canvasRenderer.RenderShape(shape);
+            canvasRenderer.Render();
 
             SwapBuffers();
         }

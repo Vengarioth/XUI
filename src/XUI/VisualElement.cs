@@ -9,7 +9,7 @@ namespace XUI
 {
     public abstract class VisualElement : UIElement
     {
-        private static DependencyProperty backgroundProperty = DependencyProperty.Register("Background", typeof(Brush), typeof(VisualElement), defaultValue: new Color());
+        private static DependencyProperty backgroundProperty = DependencyProperty.Register("Background", typeof(Brush), typeof(VisualElement), defaultValue: new ColorBrush());
         public Brush Background
         {
             get { return (Brush)GetValue(backgroundProperty); }
