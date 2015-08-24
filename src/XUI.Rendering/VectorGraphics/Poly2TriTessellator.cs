@@ -64,6 +64,21 @@ namespace XUI.Rendering.VectorGraphics
                 {
                     var lineSegment = segment as LineSegment;
                     points.Add(new PolygonPoint(lineSegment.End.X, lineSegment.End.Y));
+
+                    var ext = 0.01;
+                    var normal = path.CompositMode == CompositMode.Subtract ? lineSegment.RightNormal : lineSegment.LeftNormal;
+                    var p1 = (normal * ext) + lineSegment.Start;
+                    var p2 = (normal * ext) + lineSegment.End;
+
+                    AddVertex(vertexBufferGenerator, (float)lineSegment.Start.X, (float)lineSegment.Start.Y, 0f, 1f, r, g, b, 1f);
+                    AddVertex(vertexBufferGenerator, (float)lineSegment.End.X, (float)lineSegment.End.Y, 0f, 1f, r, g, b, 1f);
+                    AddVertex(vertexBufferGenerator, (float)p1.X, (float)p1.Y, 1f, 1f, r, g, b, 1f);
+                    indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
+
+                    AddVertex(vertexBufferGenerator, (float)lineSegment.Start.X, (float)lineSegment.Start.Y, 0f, 1f, r, g, b, 1f);
+                    AddVertex(vertexBufferGenerator, (float)p1.X, (float)p1.Y, 0f, 0f, r, g, b, 1f);
+                    AddVertex(vertexBufferGenerator, (float)p2.X, (float)p2.Y, 1f, 1f, r, g, b, 1f);
+                    indexBufferGenerator.WriteUInt((uint)indexCount++, (uint)indexCount++, (uint)indexCount++);
                 }
                 else
                 {

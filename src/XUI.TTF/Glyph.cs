@@ -71,7 +71,13 @@ namespace XUI.TTF
                 pa = new Point(Points[from + a].X / factor, Points[from + a].Y / factor);
                 pb = new Point(Points[from + b].X / factor, Points[from + b].Y / factor);
 
-                if(padding > 2)
+                if(padding > 3)
+                {
+                    //TODO
+                    var pc = new Point(Points[from + a + 1].X / factor, Points[from + a + 1].Y / factor);
+                    path.AddPathSegment(new QuadraticCurveSegment(pa, pc, pb) { Convex = true });
+                }
+                else if(padding == 3)
                 {
                     //TODO
                     var pc = new Point(Points[from + a + 1].X / factor, Points[from + a + 1].Y / factor);

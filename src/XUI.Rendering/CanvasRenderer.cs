@@ -90,6 +90,13 @@ void main (void)
 }"
             };
 
+            int count = GL.GetInteger(GetPName.NumExtensions);
+            for (int i = 0; i < count; i++)
+            {
+                string extension = GL.GetString(StringNameIndexed.Extensions, i);
+                System.Diagnostics.Debug.WriteLine(extension);
+            }
+            
             shader = ProgramFactory.BuildShaderProgram(shaderSource);
 
             var shape = new Shape();
