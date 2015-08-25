@@ -44,7 +44,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlatformInformationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer.cs" />
+    <Compile Include="Resources\BufferFactory.cs" />
+    <Compile Include="Resources\BufferGenerator.cs" />
+    <Compile Include="Resources\GLAttribute.cs" />
+    <Compile Include="Resources\GLBuffer.cs" />
+    <Compile Include="Resources\GLProgram.cs" />
+    <Compile Include="Resources\GLTexture.cs" />
+    <Compile Include="Resources\GLUniform.cs" />
+    <Compile Include="Resources\GLUniformBlock.cs" />
+    <Compile Include="Resources\GLUniformBuffer.cs" />
+    <Compile Include="Resources\GLUniformBufferElement.cs" />
+    <Compile Include="Resources\GLVertexArrayObject.cs" />
+    <Compile Include="Resources\GLVertexSignature.cs" />
+    <Compile Include="Resources\ProgramFactory.cs" />
+    <Compile Include="Resources\ShaderProgramSource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\XUI.Rendering\XUI.Rendering.csproj">
+      <Project>{5233bb21-9f85-4294-8f24-5541e01c664e}</Project>
+      <Name>XUI.Rendering</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

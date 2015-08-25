@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 
 namespace XUI.Rendering
 {
-    class Batch
+    public class Batch
     {
-
+        private List<BatchOperation> operations;
 
         public Batch()
         {
+            operations = new List<BatchOperation>();
+        }
 
+        public void AddOperation(BatchOperation operation)
+        {
+            operations.Add(operation);
+        }
+
+        public void RemoveOperation(BatchOperation operation)
+        {
+            operations.Remove(operation);
         }
     }
 }

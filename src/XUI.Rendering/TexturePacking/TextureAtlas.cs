@@ -11,16 +11,14 @@ namespace XUI.Rendering.TexturePacking
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
-        public GLTexture Texture { get; private set; }
 
         public IEnumerable<TextureAtlasTreeNode> Nodes { get { return searchTable.Values.AsEnumerable(); } }
 
         private TextureAtlasTreeNode root;
         private Dictionary<int, TextureAtlasTreeNode> searchTable;
 
-        public TextureAtlas(GLTexture texture, int width, int height)
+        public TextureAtlas(int width, int height)
         {
-            Texture = texture;
             Width = width;
             Height = height;
 

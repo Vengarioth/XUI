@@ -88,7 +88,7 @@ void main (void)
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
 
             var rnd = new Random();
-            atlas = new TexturePacking.TextureAtlas(null, Canvas.Width, Canvas.Height);
+            atlas = new TexturePacking.TextureAtlas(Canvas.Width, Canvas.Height);
 
             TexturePacking.TextureAtlasTreeNode node;
             var x = rnd.Next(3, 10) * rnd.Next(2, 6);

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUI.TTF", "src\XUI.TTF\XUI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUI.TTF.Test", "Test\XUI.TTF.Test\XUI.TTF.Test.csproj", "{814ECAB9-3E42-4830-A6CA-3B30B1A016A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUI.Rendering.OpenGL", "src\XUI.Rendering.OpenGL\XUI.Rendering.OpenGL.csproj", "{7E6FA22D-9002-41CA-A187-9883FCB717A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{814ECAB9-3E42-4830-A6CA-3B30B1A016A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{814ECAB9-3E42-4830-A6CA-3B30B1A016A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{814ECAB9-3E42-4830-A6CA-3B30B1A016A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6FA22D-9002-41CA-A187-9883FCB717A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6FA22D-9002-41CA-A187-9883FCB717A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6FA22D-9002-41CA-A187-9883FCB717A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6FA22D-9002-41CA-A187-9883FCB717A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
