@@ -34,8 +34,13 @@
       <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Poly2Tri, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Poly2Tri.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,6 +66,14 @@
     <Compile Include="Resources\GLVertexSignature.cs" />
     <Compile Include="Resources\ProgramFactory.cs" />
     <Compile Include="Resources\ShaderProgramSource.cs" />
+    <Compile Include="Resources\TextureFactory.cs" />
+    <Compile Include="Shader\PathShader.cs" />
+    <Compile Include="Shader\SpriteBatchShader.cs" />
+    <Compile Include="SpriteBatchBuffer.cs" />
+    <Compile Include="SpriteBatchBufferGenerator.cs" />
+    <Compile Include="SystemTextRenderer.cs" />
+    <Compile Include="VectorGraphics\Poly2TriTessellator.cs" />
+    <Compile Include="VectorGraphics\VectorMesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +82,10 @@
     <ProjectReference Include="..\XUI.Rendering\XUI.Rendering.csproj">
       <Project>{5233bb21-9f85-4294-8f24-5541e01c664e}</Project>
       <Name>XUI.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XUI\XUI.csproj">
+      <Project>{e9eb3bb7-64d6-4123-8a99-b31ac32ff320}</Project>
+      <Name>XUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

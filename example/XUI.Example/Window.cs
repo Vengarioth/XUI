@@ -24,7 +24,7 @@ namespace XUI.Example
         {
             canvas = new Canvas(1280, 720);
             grid = new Grid();
-            canvasRenderer = new CanvasRenderer(canvas);
+            canvasRenderer = new CanvasRenderer(canvas, new XUI.Rendering.OpenGL.Renderer());
 
             canvas.Child = grid;
 

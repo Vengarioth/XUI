@@ -24,5 +24,10 @@ namespace XUI.Rendering
         {
             operations.Remove(operation);
         }
+
+        public BatchOperation[] GetOperations()
+        {
+            return operations.ToArray();
+        }
     }
 }

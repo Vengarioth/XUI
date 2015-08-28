@@ -19,6 +19,12 @@ namespace XUI.Rendering.OpenGL.Resources
             TextureTarget = textureTarget;
         }
 
+        public void SubImage2D(int x, int y, int width, int height, IntPtr data)
+        {
+            GL.BindTexture(TextureTarget, Handle);
+            GL.TexSubImage2D(TextureTarget, 0, x, y, width, height, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+        }
+
         public void Dispose()
         {
             Disposed = true;

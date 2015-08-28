@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XUI.Rendering.OpenGL;
+using XUI.Rendering.OpenGL.Resources;
 using XUI.Rendering.VectorGraphics;
 using XUI.Vector;
 

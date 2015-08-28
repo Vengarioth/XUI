@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL4;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +9,9 @@ namespace XUI.Rendering
 {
     class BatchManager
     {
-        private int maxTextureSize;
-        private int maxArrayTextureLayers;
-
         public BatchManager()
         {
-            GL.GetInteger(GetPName.MaxTextureSize, out maxTextureSize);
-            GL.GetInteger(GetPName.MaxArrayTextureLayers, out maxArrayTextureLayers);
+
         }
 
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XUI.Rendering.OpenGL;
+using XUI.Rendering.OpenGL.Resources;
 
 namespace XUI.Rendering
 {

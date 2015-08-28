@@ -21,7 +21,7 @@ namespace XUI.Rendering.OpenGL.Resources
             buffer = new byte[1024];
             pointer = 0;
         }
-
+        
         public byte[] GetBuffer()
         {
             return buffer.Take(pointer).ToArray();

@@ -79,6 +79,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\XUI.Rendering.OpenGL\XUI.Rendering.OpenGL.csproj">
+      <Project>{7e6fa22d-9002-41ca-a187-9883fcb717a1}</Project>
+      <Name>XUI.Rendering.OpenGL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\XUI.Rendering\XUI.Rendering.csproj">
       <Project>{5233bb21-9f85-4294-8f24-5541e01c664e}</Project>
       <Name>XUI.Rendering</Name>
