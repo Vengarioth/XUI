@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace XUI.Rendering
 {
-    public class Batch
+    public class SpriteBatch
     {
-        private List<BatchOperation> operations;
+        private List<SpriteBatchOperation> operations;
 
-        public Batch()
+        public SpriteBatch()
         {
-            operations = new List<BatchOperation>();
+            operations = new List<SpriteBatchOperation>();
         }
 
-        public void AddOperation(BatchOperation operation)
+        public void AddOperation(SpriteBatchOperation operation)
         {
             operations.Add(operation);
         }
 
-        public void RemoveOperation(BatchOperation operation)
+        public void RemoveOperation(SpriteBatchOperation operation)
         {
             operations.Remove(operation);
         }
 
-        public BatchOperation[] GetOperations()
+        public SpriteBatchOperation[] GetOperations()
         {
             return operations.ToArray();
         }

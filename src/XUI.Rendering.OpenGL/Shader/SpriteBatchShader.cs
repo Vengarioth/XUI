@@ -9,6 +9,7 @@ namespace XUI.Rendering.OpenGL.Shader
     static class SpriteBatchShader
     {
         private static string vertexSource = @"
+#version 440
 layout(location = 0)in vec4 in_xyuv;
 
 layout(location = 0)out vec2 out_uv;
@@ -20,6 +21,7 @@ void main(void)
 }
 ";
         private static string fragmentSource = @"
+#version 440
 layout(binding=0) uniform sampler2D atlas;
 
 layout(location = 0)in vec2 in_uv;

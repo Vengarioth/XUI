@@ -12,12 +12,12 @@ namespace XUI.Rendering.OpenGL
         private GLProgram spriteBatchShader;
 
         private SpriteBatchBufferGenerator spriteBatchBufferGenerator;
-        private Dictionary<Batch, SpriteBatchBuffer> spriteBatchBufferList;
+        private Dictionary<SpriteBatch, SpriteBatchBuffer> spriteBatchBufferList;
         private Dictionary<Texture, GLTexture> textureList;
 
         public Renderer()
         {
-            spriteBatchBufferList = new Dictionary<Batch, SpriteBatchBuffer>();
+            spriteBatchBufferList = new Dictionary<SpriteBatch, SpriteBatchBuffer>();
             textureList = new Dictionary<Texture, GLTexture>();
         }
 
@@ -49,29 +49,29 @@ namespace XUI.Rendering.OpenGL
             textureList.Remove(texture);
         }
 
-        public void AddBatch(Batch batch)
+        public void AddBatch(SpriteBatch spriteBatch)
         {
-            if (spriteBatchBufferList.ContainsKey(batch))
+            if (spriteBatchBufferList.ContainsKey(spriteBatch))
                 throw new Exception("Batch already present!");
 
             spriteBatchBufferGenerator.Clear();
-            foreach (var operation in batch.GetOperations())
+            foreach (var operation in spriteBatch.GetOperations())
             {
                 spriteBatchBufferGenerator.AddRectangle(operation.SourceX, operation.SourceY, operation.SourceWidth, operation.SourceHeight,
                     operation.TargetX, operation.TargetY, operation.TargetWidth, operation.TargetHeight);
             }
 
             var spriteBatchBuffer = spriteBatchBufferGenerator.GetBuffer();
-            spriteBatchBufferList.Add(batch, spriteBatchBuffer);
+            spriteBatchBufferList.Add(spriteBatch, spriteBatchBuffer);
         }
 
-        public void RemoveBatch(Batch batch)
+        public void RemoveBatch(SpriteBatch spriteBatch)
         {
-            if (!spriteBatchBufferList.ContainsKey(batch))
+            if (!spriteBatchBufferList.ContainsKey(spriteBatch))
                 throw new Exception("Batch not present!");
 
-            spriteBatchBufferList[batch].Dispose();
-            spriteBatchBufferList.Remove(batch);
+            spriteBatchBufferList[spriteBatch].Dispose();
+            spriteBatchBufferList.Remove(spriteBatch);
         }
 
         public void RenderTextToSurface(string text, Surface surface)
@@ -94,13 +94,13 @@ namespace XUI.Rendering.OpenGL
             throw new NotImplementedException();
         }
 
-        public void RenderBatchToSurface(Batch batch, Surface surface)
+        public void RenderBatchToSurface(SpriteBatch spriteBatch, Surface surface)
         {
-            if (!spriteBatchBufferList.ContainsKey(batch))
+            if (!spriteBatchBufferList.ContainsKey(spriteBatch))
                 throw new Exception("batch not found!");
             //if surface..
 
-            var spriteBatchBuffer = spriteBatchBufferList[batch];
+            var spriteBatchBuffer = spriteBatchBufferList[spriteBatch];
             spriteBatchBuffer.VertexBuffer.Bind();
             spriteBatchBuffer.IndexBuffer.Bind();
         }
@@ -126,7 +126,7 @@ namespace XUI.Rendering.OpenGL
             throw new NotImplementedException();
         }
 
-        public void RenderBatchToTexture(Batch batch, Texture texture)
+        public void RenderBatchToTexture(SpriteBatch spriteBatch, Texture texture)
         {
             throw new NotImplementedException();
         }

@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Bounds.cs" />
     <Compile Include="BoundsS.cs" />
+    <Compile Include="BoxStyle.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Canvas.cs" />
     <Compile Include="Color.cs" />

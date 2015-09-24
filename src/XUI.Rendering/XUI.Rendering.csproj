@@ -39,9 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Batch.cs" />
-    <Compile Include="BatchManager.cs" />
-    <Compile Include="BatchOperation.cs" />
+    <Compile Include="SpriteBatch.cs" />
+    <Compile Include="SpriteBatchOperation.cs" />
     <Compile Include="CanvasRenderer.cs" />
     <Compile Include="IGraphicsResource.cs" />
     <Compile Include="IPlatformInformationProvider.cs" />

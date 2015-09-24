@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace XUI.Rendering
 {
-    public class BatchOperation
+    public class SpriteBatchOperation
     {
         public int SourceX { get; private set; }
         public int SourceY { get; private set; }
